@@ -15,11 +15,12 @@ export default defineConfig({
         ]),
     ],
     root: './src',
-    publicDir: '../public',
-    build: {
-        outDir: '../dist',
-    },
+    publicDir: './public',
     resolve: {
         alias: { '@': join(__dirname, 'src') }
+    },
+    build: {
+        outDir: '../dist',
+        emptyOutDir: true
     }
 })
