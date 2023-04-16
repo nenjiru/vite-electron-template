@@ -1,10 +1,30 @@
 import * as path from 'path'
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
+import { JsonDB, Config } from 'node-json-db'
 
 process.env.DIST = path.join(__dirname, '../dist')
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../src/public')
 
 let win: BrowserWindow | null
+
+// via https://ja.vitejs.dev/guide/env-and-mode.html
+const domainName = import.meta.env.VITE_APP_NAME
+const domain = path.join(app.getPath('userData'), domainName)
+const db = new JsonDB(new Config(domain, true, true))
+console.log(`DB Path: ${domain}`)
+
+// Print configs
+if (!app.isPackaged)
+{
+    (async () =>
+    {
+        const anyPath = await db.getObjectDefault('/anyPath', 'Not set path')
+        console.log(`anyPath: ${anyPath}`)
+        await db.push('/anyName', 'Any Name')
+        var data = await db.getData("/")
+        console.log('All:', data)
+    })()
+}
 
 function createWindow()
 {
