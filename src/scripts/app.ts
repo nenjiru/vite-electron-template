@@ -2,10 +2,13 @@ import '@/styles/style.css'
 import typescriptLogo from '@/images/typescript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter'
+import option from '@/scripts/config'
+
+console.log(option)
 
 if (import.meta.env.DEV)
 {
-    console.log('Development mode')
+  console.log('Development mode')
 }
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
@@ -31,12 +34,12 @@ document.querySelector('#dialog')!.addEventListener('click', window.api.openDial
 
 window.onload = () =>
 {
-    window.api.on('main-process-message', msg =>
-    {
-        console.log(msg)
-    })
-    window.api.on('file-list', list =>
-    {
-        console.log(list)
-    })
+  window.api.on('main-process-message', msg =>
+  {
+    console.log(msg)
+  })
+  window.api.on('file-list', list =>
+  {
+    console.log(list)
+  })
 }
